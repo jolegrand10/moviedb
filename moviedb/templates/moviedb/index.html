@@ -1,0 +1,39 @@
+{% extends 'moviedb/base.html' %}
+{% block content %}
+  <p>Movies found: 
+      {{content|length}}
+  </p>
+  <ul>
+
+	  {% for m in content %}
+	      <li>
+	      <a href="{% url 'moviedb:movie_details' movie_id=m.id %}">
+		{{m.title}} 
+		{{m.comment}}
+	      </a>
+	      <a href="{% url 'moviedb:director_details' director_id=m.director.id %}">
+		{{m.director.first_name}} 
+		{{m.director.last_name}}
+	      </a>
+	      </li>
+	  {% endfor %}
+  {% if paginate %}
+	<nav>
+	{% if content.has_previous %}
+		<a href="?page={{ content.previous_page_number }}">
+		Précédent
+		</a>
+	{% endif %}
+	{% if content.has_next %}
+		<a href="?page={{ content.next_page_number }}">
+		Suivant
+		</a>
+	{% endif %}
+	</nav>
+
+
+  {% endif %}
+
+{% endblock %}
+
+

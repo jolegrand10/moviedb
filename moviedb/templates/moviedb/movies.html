@@ -1,0 +1,16 @@
+{% extends 'moviedb/base.html' %}
+{% block content %}
+  <ul>
+  {% for m in content %}
+      <li>
+        <a href="{% url 'moviedb:movie_details' movie_id=m.id %}">
+          {{m.title}}
+          {{m.comment}}
+        </a>
+      </li>
+  {% endfor %}
+
+
+{% endblock %}
+
+

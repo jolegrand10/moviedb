@@ -1,0 +1,7 @@
+env/
+ec1/__pycache__/
+moviedb/__pycache__/
+moviedb/migrations/__pycache__/
+bonjour/**
+trinome/**
+moviedb/startbootstrap-business-casual-gh-pages/**

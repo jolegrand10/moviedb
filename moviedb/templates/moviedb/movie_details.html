@@ -1,0 +1,25 @@
+{% extends 'moviedb/base.html' %}
+{% block content %}
+
+
+  <h1> {{movie.title}}</h1>
+  <p> directed by {{director.first_name}} {{director.last_name}}
+  </p><p>
+    ({{movie.comment}})
+  </p>
+
+  <h2> Available movies with same director</h2>
+  <ul>
+  {% for m in related_movies %}
+      <li>
+      <a href="{% url 'moviedb:movie_details' movie_id=m.id %}">
+        {{m.title}}
+        {{m.comment}}
+      </a>
+      </li>
+  {% endfor %}
+
+
+{% endblock %}
+
+
