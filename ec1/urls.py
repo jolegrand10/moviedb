@@ -18,7 +18,5 @@ from django.urls import include,path,re_path
 
 urlpatterns = [
     re_path('^admin/', admin.site.urls),
-    re_path('^trinome/', include('trinome.urls')),
-    re_path('^bonjour/', include('bonjour.urls')),
     re_path('^moviedb/', include(('moviedb.urls', 'moviedb'),namespace='moviedb')),
 ]
