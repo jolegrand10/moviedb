@@ -25,8 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY','zmrjos(f)q^24_c4x8zfj$a#kr)24!@+pqc22@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = True
-    ALLOWED_HOSTS = ['serene-brushlands-40275.herokuapp.com']
+    DEBUG = False
+    ALLOWED_HOSTS = ['localhost','serene-brushlands-40275.herokuapp.com']
 else:
     DEBUG = False
     ALLOWED_HOSTS = ['localhost']
