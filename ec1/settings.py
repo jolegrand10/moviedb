@@ -15,7 +15,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_ROOT= os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','zmrjos(f)q^24_c4x8zfj$a#kr)24!@+pqc22@
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
-    ALLOWED_HOSTS = ['localhost','serene-brushlands-40275.herokuapp.com']
+    ALLOWED_HOSTS = ['0.0.0.0', 'localhost','serene-brushlands-40275.herokuapp.com']
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost']
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'debug_toolbar',
     'moviedb'
@@ -138,7 +139,6 @@ INTERNAL_IPS = ['127.0.0.1']
 
 if os.environ.get('ENV') == 'PRODUCTION' :
     #Static files settings
-    PROJECT_ROOT= os.path.dirname(os.path.abspath(__file__))
     print("BASE_DIR=", BASE_DIR)
     print("PROJECT_ROOT=", PROJECT_ROOT)
     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
