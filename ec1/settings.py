@@ -137,26 +137,17 @@ STATIC_URL = '/static/'
 #Django debug toolbar
 INTERNAL_IPS = ['127.0.0.1']
 
-if os.environ.get('ENV') == 'PRODUCTION' :
-    #Static files settings
-    print("BASE_DIR=", BASE_DIR)
-    print("PROJECT_ROOT=", PROJECT_ROOT)
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-    print("STATIC_ROOT=", STATIC_ROOT)
 
-    #Extra places for collectstatic to find static files
-    STATICFILES_DIRS = (
+# simplified static file serving
+# https://warehouse.python.org/project/whitenoise
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATICFILES_DIRS = (
         os.path.join(PROJECT_ROOT, 'static'),
     )
-    print("STATICFILES_DIRS=", STATICFILES_DIRS)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    
-    # simplified static file serving
-    # https://warehouse.python.org/project/whitenoise/
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
     
 
 
