@@ -1,4 +1,5 @@
 env/
+__pycache__/
 ec1/__pycache__/
 moviedb/__pycache__/
 moviedb/migrations/__pycache__/
