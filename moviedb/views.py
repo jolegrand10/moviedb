@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from moviedb.models import Movie, Director
-
+from moviedb.moviescrap import MovieScrap
 
 
 
@@ -43,7 +43,18 @@ def movie_details(request,movie_id):
     movie=Movie.objects.get(pk=movie_id)
     director=Director.objects.get(pk=movie.director.id)
     related_movies=Movie.objects.filter(director=director.id)
-    context={'movie':movie, 'director':director, 'related_movies':related_movies}
+    #
+    # collect an image from google
+    #
+    mvs=MovieScrap()
+    mvs.setQueryStr(" ".join([movie.title,director.first_name, director.last_name]))
+    mvs.scrapPics()
+    image = mvs.results[-1][2]
+    link = mvs.scrapImdb()
+    #
+    # collect a link to the imdb page
+    #
+    context={'movie':movie, 'image':image, 'link':link, 'director':director, 'related_movies':related_movies}
     template= 'moviedb/movie_details.html'
     return render(request, template, context)
 
