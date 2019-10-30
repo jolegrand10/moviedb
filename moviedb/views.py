@@ -49,7 +49,10 @@ def movie_details(request,movie_id):
     mvs=MovieScrap()
     mvs.setQueryStr(" ".join([movie.title,director.first_name, director.last_name]))
     mvs.scrapPics()
-    image = mvs.results[-1][2]
+    try:
+		image = mvs.results[-1][2]
+	except IndexError:
+		image = "https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png"
     link = mvs.scrapImdb()
     #
     # collect a link to the imdb page
