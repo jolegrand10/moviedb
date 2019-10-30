@@ -6,8 +6,11 @@ from django.shortcuts import render
 import logging
 from moviedb.models import Movie, Director
 from moviedb.moviescrap import MovieScrap
+from django.conf import settings
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)  # once in each module
+logger.debug("Logging is configured.")
+logger.info("Logging, now")
 
 # Create your views here.
 
