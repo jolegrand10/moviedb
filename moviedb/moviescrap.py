@@ -8,6 +8,8 @@
 from bs4 import BeautifulSoup
 from googlesearch import search
 from io import BytesIO
+import logging
+import logging.config
 from PIL import Image
 import re
 import requests
@@ -17,10 +19,14 @@ import urllib.request
 
 DEBUG = False
 
+
+
+logger = logging.getLogger(__name__)  # once in each module
+
 class MovieScrap:
-	MAXREP = 5
+	MAXREP = 15
 	MAXPICS = 5
-	INTERVAL = 2 # in seconds
+	INTERVAL = 1 # in seconds
 	def __init__(self):
 		self.queryDict= {"Title":"", "Director":"", "Other":""}
 		self.results=[]
@@ -123,14 +129,14 @@ class MovieScrap:
 			#
 			# explore url for images
 			#
-			if DEBUG: print("... exploring ",url)
+			logger.debug("... exploring "+url)
 			try:
 				response= requests.get(url)
 			except requests.exceptions.SSLError:
-				if DEBUG: print("Max retries exceeded - Certificate verif failed")
+				logger.info("Max retries exceeded - Certificate verif failed")
 				continue
 			except Exception as e:
-				if DEBUG: print("Unexpected exception",e)
+				logger.error("Unexpected exception when accessing pic"+str(e))
 				continue
 			soup = BeautifulSoup(response.text, "html.parser")
 			for raw_img in soup.find_all('img',{'src':re.compile(r'\.jpe?g')}):
@@ -148,10 +154,10 @@ class MovieScrap:
 						if len(self.results)>MovieScrap.MAXPICS:
 							self.results = self.results[-MovieScrap.MAXPICS:]
 					except requests.exceptions.MissingSchema:
-						if DEBUG: print("Unreachable")
+						logger.info("Unreachable pic")
 						continue
 					except Exception as e:
-						if DEBUG: print("Unexpected exception",e)
+						logger.error("Unexpected exception when retrieving pic details"+str(e))
 						continue
 			#
 			# exploring more sites ceases as soon as 
@@ -172,10 +178,30 @@ class MovieScrap:
 		#
 		for url in search(q1, stop=MovieScrap.MAXREP, pause=MovieScrap.INTERVAL):
 			return url
-	
-		
+
 
 def main():
+	logging.config.dictConfig({
+		'version': 1,
+		'disable_existing_loggers': False,
+		'formatters': {
+			'console': {
+				'format': '%(name)-12s %(levelname)-8s %(message)s'
+			},
+		},
+		'handlers': {
+			'console': {
+				'class': 'logging.StreamHandler',
+				'formatter': 'console'
+			},
+		},
+		'loggers': {
+			'': {
+				'level': 'INFO',
+				'handlers': ['console', ]
+			}
+		}
+	})
 	while True:
 		mps= MovieScrap()
 		mps.collect_interactive_query()
