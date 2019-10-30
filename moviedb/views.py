@@ -11,6 +11,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)  # once in each module
 logger.debug("Logging is configured.")
 logger.info("Logging, now")
+logger.error("simulating an error")
 
 # Create your views here.
 
