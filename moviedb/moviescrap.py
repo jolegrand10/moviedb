@@ -24,9 +24,9 @@ DEBUG = False
 logger = logging.getLogger(__name__)  # once in each module
 
 class MovieScrap:
-	MAXREP = 15
+	MAXREP = 10
 	MAXPICS = 5
-	INTERVAL = 1 # in seconds
+	INTERVAL = 2 # in seconds
 	def __init__(self):
 		self.queryDict= {"Title":"", "Director":"", "Other":""}
 		self.results=[]
@@ -136,7 +136,7 @@ class MovieScrap:
 				logger.info("Max retries exceeded - Certificate verif failed")
 				continue
 			except Exception as e:
-				logger.error("Unexpected exception when accessing pic"+str(e))
+				logger.error("Unexpected exception when accessing pic "+str(e))
 				continue
 			soup = BeautifulSoup(response.text, "html.parser")
 			for raw_img in soup.find_all('img',{'src':re.compile(r'\.jpe?g')}):
@@ -157,7 +157,7 @@ class MovieScrap:
 						logger.info("Unreachable pic")
 						continue
 					except Exception as e:
-						logger.error("Unexpected exception when retrieving pic details"+str(e))
+						logger.error("Unexpected exception when retrieving pic details "+str(e))
 						continue
 			#
 			# exploring more sites ceases as soon as 
