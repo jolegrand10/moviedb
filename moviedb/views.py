@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
+import logging
 from moviedb.models import Movie, Director
 from moviedb.moviescrap import MovieScrap
 
@@ -52,6 +53,7 @@ def movie_details(request,movie_id):
     try:
         image = mvs.results[-1][2]
     except IndexError:
+		logging.error("No pic for :"+str(mvs))
         image = "https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png"
     link = mvs.scrapImdb()
     #
