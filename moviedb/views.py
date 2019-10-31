@@ -46,19 +46,15 @@ def movie_details(request,movie_id):
     director=Director.objects.get(pk=movie.director.id)
     related_movies=Movie.objects.filter(director=director.id)
     #
-    # collect an image from google
+    # IMDB logo
+    #
+    image = "https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png"
+    #
+    # Link to imdb page for that movie
     #
     mvs=MovieScrap()
     mvs.setQueryStr(" ".join([movie.title,director.first_name, director.last_name]))
-    mvs.scrapPics()
-    try:
-        image = mvs.results[-1][2]
-    except IndexError:
-        logger.error("No pic for :"+str(mvs))
-        image = "https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png"
     link = mvs.scrapImdb()
-    #
-    # collect a link to the imdb page
     #
     context={'movie':movie, 'image':image, 'link':link, 'director':director, 'related_movies':related_movies}
     template= 'moviedb/movie_details.html'
@@ -67,7 +63,17 @@ def movie_details(request,movie_id):
 def director_details(request,director_id):
     director=Director.objects.get(pk=director_id)
     related_movies=Movie.objects.filter(director=director_id)
-    context={'director':director, 'related_movies':related_movies}
+    #
+    # IMDB logo
+    #
+    image = "https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png"
+    #
+    # Link to imdb page for that director
+    #
+    mvs=MovieScrap()
+    mvs.setQueryStr(" ".join([director.first_name, director.last_name]))
+    link = mvs.scrapImdb()
+    context={'director':director, 'image':image, 'link':link, 'related_movies':related_movies}
     template= 'moviedb/director_details.html'
     return render(request, template, context) 
 
