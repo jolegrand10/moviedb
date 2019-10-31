@@ -1,8 +1,11 @@
 {% extends 'moviedb/base.html' %}
 {% block content %}
 
-
   <h1> {{director.first_name}} &nbsp; {{director.last_name}}</h1>
+    <a target="_blank" rel="noopener noreferrer"  href="{{link}}">
+	  <img style="max-width:100px;"
+	  src="{{image}}" alt="some text">
+    </a>
   <h2> Available movies for this director</h2>
   <ul>
   {% for m in related_movies %}
@@ -12,10 +15,7 @@
       </a>
       </li>
   {% endfor %}
-  <a href="{{link}}">
-	<img style="max-width:100px;"
-	src="{{image}}" alt="some text">
-  </a>
+
 {% endblock %}
 
 
