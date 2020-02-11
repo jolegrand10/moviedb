@@ -2,7 +2,7 @@ beautifulsoup4==4.8.1
 certifi==2019.6.16
 chardet==3.0.4
 dj-database-url==0.5.0
-Django==2.1.11
+Django==2.2.10
 django-debug-toolbar==1.11
 google==2.0.2
 gunicorn==19.9.0
