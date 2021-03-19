@@ -7,7 +7,7 @@ django-debug-toolbar==1.11
 google==2.0.2
 gunicorn==19.9.0
 idna==2.8
-Pillow==6.2.1
+Pillow==8.1.1
 psycopg2-binary==2.7.6.1
 pytz==2018.7
 requests==2.22.0
